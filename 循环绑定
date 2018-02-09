@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>属性遍历</title>
+</head>
+
+<body>
+    <div id="demo">
+        <button>11</button>
+        <button>22</button>
+        <button>33</button>
+        <button>44</button>
+    </div>
+    <script>
+        // 四个button，单机每个button弹出对应的index
+        var _id = document.getElementById("demo");
+        var btn=_id.getElementsByTagName("button");
+
+        // for(var i=0;i<btn.length;i++){
+        //     btn[i].onclick=function(){
+        //         alert(i);
+        //     }
+        // }
+        // 这种方式发现点击任何一个button弹出的都是4
+        // 原因：js是单线程的，浏览器是多线程的，当点击button的时候，循环已经结束了，i是全局变量，等于4
+        // 解决办法
+
+        // 第一种，自定义属性
+
+        for(var i=0;i<btn.length;i++){
+            btn[i].myIndex=i;
+            btn[i].onclick=function(){
+                alert(this.myIndex);
+            }
+        }
+        //    第二种  私有作用域
+        
+        // for(var i=0;i<btn.length;i++){
+        // ~function(i){
+        //   btn[i].onclick=function(){
+        //     alert(i);  
+        //   }
+        // }(i)
+
+        // for(var i=0;i<btn.length;i++){
+        //     btn[i].onclick=(function(i){
+        //         return function(){
+        //             alert(i);
+        //         };
+        //     })(i)   //性能不好
+        // }
+     
+        // 第三种，let
+        for(let i=0;i<btn.length;i++){
+            btn[i].onclick=function(){
+                alert(i);
+            }
+        }
+    </script>
+</body>
+
+</html>
