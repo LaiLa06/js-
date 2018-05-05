@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <style>
+        #box{position:relative;width: 100px;height:100px;background-color:orange;}
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script src="js/animate.js"></script>
+<script>
+  let box = document.getElementById('box');
+
+  animate(box,{
+      top:200,
+      left:200,
+      width:100,
+      height:100,
+  },1000,function () {
+      this.style.borderRadius = 100 +'px';
+      this.style.backgroundColor = 'green'
+  })
+
+</script>
+
+</body>
+</html>

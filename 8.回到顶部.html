@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <style>
+        html,body{
+            height:500%;background: -webkit-linear-gradient(top left,lightpink,lightcyan,lightblue,lightcoral);
+        }
+        #link{
+            position:fixed;right:20px;bottom:100px;text-align:center;line-height:100px;
+            width:100px;height:100px;font-size:20px;color:#fff;background-color:#666666;
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<a href="javascript:;" id="link">Go</a>
+<script>
+    (function(){
+        let link = document.querySelector("#link");
+        // 页面在滚动的时候（鼠标滚轮、键盘按键、手动拖动滚动条）基于JS控制页面滚动的时候（。。。）
+        // 我们随时获取当前页面滚去的高度，如果滚动的高度 > 一屏幕的高度，让link显示，否则隐藏
+        window.onscroll = function(){
+            let scroll = document.documentElement.scrollTop,
+                winH = document.documentElement.clientHeight;
+
+            if(scroll > winH){
+                link.style.display = 'block'
+            }else{
+                link.style.display = 'none'
+            }
+        };
+
+        let isRun = true;  // 记录当前是否在运动，当点击A标签开启动画的时候，让其变为true， 动画结束变为false
+
+        link.onclick = function () {
+            isRun = false;
+            // 动画，在指定的时间内（1s）,匀速运动到顶部
+            // 1，每间隔多长时间走一步（在原有的scrollTop）基础上减去步长，
+            // 2，规定时间内完成动画，我们需要根据距离和总时间算出步长
+
+
+            let change = document.documentElement.scrollTop,
+                duration = 1000,
+                interval = 17,
+                step = change/duration*interval;
+            console.log(step);
+            let timer = setInterval(()=>{
+                // 在当前scrollTop的基础上，减去step步长，即可完成动画
+                let curT = document.documentElement.scrollTop;
+                console.log('ok');
+                if(curT === 0){
+                    isRun = true;
+                    clearInterval(timer);
+                    return;
+                }
+               if(!isRun){
+                   curT = curT - step;
+                   document.documentElement.scrollTop = curT;
+               }
+
+            },interval);
+        }
+
+    })()
+
+</script>
+</body>
+</html>

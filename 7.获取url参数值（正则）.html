@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/reset.css">
+</head>
+<body>
+<script>
+    // “04-30 17:50”
+    // let str =  '2018/4/30 17:50:23',
+    //     ary = str.split(/(?:\/| |:)/g);
+    // console.log(ary);
+    // let [,month,day,hour,min] = ary;
+    // let result = month+'-'+day+' '+hour+':'+min;
+    // console.log(result);
+
+    let str = 'http://www.zhufengpeixun.cn/stu/?name=AA&age=25&sex=0&size=5#teacher';
+    //{name:'AA',age:25,sex:0,HASH:'teacher'}'
+    let reg = /(?:\?|&|#|=)/g;
+    ary =  str.split(reg);
+    ary.shift();
+    let obj = {};
+    if(ary.length%2!==0){
+        obj['Hash']= ary[ary.length-1];
+        ary.pop();
+    }
+    console.log(ary);
+    ary.forEach((item,index)=>{
+        if(index%2==0){
+            obj[item] = ary[index+1];
+        }
+    });
+    console.log(obj);
+
+
+
+    // 获取某个参数的值
+    let str = 'localhost?name=zhufeng&year=9&teacher=zxiaotian';
+    let getParam = function (url,attr) {
+        // 先把问号后面的值获取到
+        let obj = {},
+            reg = /([^?&=#]+)=([^?&=#]+)/g;
+        url = url.replace(reg,(...arg)=>{
+            let [,key,value] = arg;
+            obj[key] = value;
+        });
+        return obj[attr];
+    };
+    console.log(getParam(str,'teacher'));
+</script>
+</body>
+</html>

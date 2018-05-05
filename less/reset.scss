@@ -1,0 +1,154 @@
+body {
+  font-size: .32rem;
+  font-family: 'STHeiti', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: #323232;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  font-size: 100%;
+}
+
+em, u, i {
+  font-style: normal;
+}
+
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, cite, code, em, img, q, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, canvas, figure, figcaption, footer, header, hgroup, nav, section, time, mark, audio, video, input, textarea {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary, iframe {
+  display: block
+}
+
+a, a:active, a:hover, a:focus, a:visited {
+  text-decoration: none;
+  outline: none
+}
+
+a, img {
+  -webkit-touch-callout: none
+}
+
+ol, ul, li {
+  list-style: none
+}
+
+textarea, input[type="password"], input[type="text"] {
+  resize: none;
+  outline: 0;
+  -webkit-appearance: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: #fff;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+}
+
+form, input, button, select, textarea {
+  font-size: 100%
+}
+
+button, input {
+  line-height: normal
+}
+
+textarea {
+  overflow: auto;
+  vertical-align: top
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+fieldset {
+  border: none
+}
+
+b, strong {
+  font-weight: bold
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+//普通flex布局
+.pubFlex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+
+//宽度自动伸缩(不引用类直接写在样式表里webpack1.0不会编译)
+.autoFlex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+//控制元素绝对居中
+.a_center {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+
+//同行水平垂直居中
+//垂直居中
+.vertical-center {
+  -webkit-align-content: stretch;
+  align-content: stretch;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.columnCenter {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+/*换行水平垂直居中*/
+//单行文字溢出用点显示--在flex模型下有时候不灵，或者加一个宽度，就要用到twoline_text方法
+.oneline_text {
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+//两行文字溢出用点显示
+.twoline_text, .threeline_text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.twoline_text {
+  -webkit-line-clamp: 2;
+}
+
+.threeline_text {
+  -webkit-line-clamp: 3;
+}
+
+//三行文字溢出用点显示(改变clamp即可)
