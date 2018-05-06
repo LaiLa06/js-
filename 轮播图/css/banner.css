@@ -1,0 +1,46 @@
+.container{
+    margin:20px auto;width:1000px;height:300px;text-align:center;
+    position:relative;overflow:hidden;
+}
+.wrapper{
+ position: absolute;top:0;left:0;
+ height:100%;
+}
+.slide{
+  width:1000px;float:left;height:100%;overflow:hidden;
+}
+.slide img{width:100%;display:block;}
+.focus{
+ z-index:3;position:absolute;left:50%;bottom:10px;
+ transform:translateX(-50%);
+ /*基于css3中的 这个属性，在不固定的宽度的情况下实现水平居中，transform:translateX(-50%);向左移动盒子的一半*/
+ height:12px;padding:4px;background-color:rgba(0,0,0,.5);
+ border-radius:10px;/* 让其为盒子高度的一般，这样就是一个椭圆 */
+ font-size:0;
+}
+.focus li{
+  width:12px;height:12px;background-color:#fff;border-radius:50%;margin-left:4px;
+  display:inline-block;cursor:pointer;
+}
+.focus li:first-child{margin-left:0;}
+.focus li.active{background-color:red;}
+
+.arrow{
+ display:none;
+ width:28px;height:45px;
+ z-index:4;position:absolute;top:50%;margin-top:-22.5px;
+ background:url(../img/pre.png) no-repeat;
+ opacity:0.5;
+}
+.arrow.arrowLeft{
+   left:0;
+   backrground-position: 0 0;
+}
+.arrow.arrowRight{
+    right:0;
+    backrground-position: -50px 0;
+}
+
+.arrow:hover{
+    opacity:1;
+}
