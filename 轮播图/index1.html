@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet" href="css/banner1.css">
+    <title>轮播图</title>
+</head>
+<body>
+<section id="container" class="container">
+    <div class="wrapper clearfix">
+    </div>
+    <ul class="focus">
+    </ul>
+    <a href="javascript:;" class="arrow arrowLeft"></a>
+    <a href="javascript:;" class="arrow arrowRight"></a>
+</section>
+
+<section id="container1" class="container">
+    <div class="wrapper clearfix">
+    </div>
+    <ul class="focus">
+    </ul>
+    <a href="javascript:;" class="arrow arrowLeft"></a>
+    <a href="javascript:;" class="arrow arrowRight"></a>
+</section>
+
+
+
+<script src="js/animate1.js"></script>
+<script src="js/banner1.js"></script>
+<script>
+    new Banner({
+        ele:'#container',
+        url:'json/banner.json',
+    });
+    new Banner({
+        ele:'#container1',
+        url:'json/banner2.json',
+        interval:2000
+    })
+</script>
+</body>
+</html>

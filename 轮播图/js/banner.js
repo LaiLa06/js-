@@ -1,4 +1,6 @@
 
+// 基于单例模式封装组件
+
 let  bannerRender = (function () {
    // 1，获取需要操作的元素
 
@@ -12,7 +14,7 @@ let  bannerRender = (function () {
        //轮播图运动的基础参数
     let stepIndex = 0,   // 记录步长，当前展示块的索引
         autoTimer = null,  // d自动轮播的定时器
-        interval = 1000;  // 间隔多长时间切换一次
+        interval = 3000;  // 间隔多长时间切换一次
 
 
         // 2，获取数据
@@ -76,8 +78,6 @@ let  bannerRender = (function () {
       // 每次运动完成，需要让焦点跟着切换
        changeFocus();
    };
-
-   // 5,让焦点跟着轮播图的切换而切换
    let changeFocus = function changeFocus() {
      // 当轮播图运动到最后一张（克隆的第一张，我们需要让第一个li有选中样式）
      let tempIndex = stepIndex;
