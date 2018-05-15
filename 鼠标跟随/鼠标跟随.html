@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标跟随</title>
+    <link rel="stylesheet" href="../common/css/reset.min.css">
+    <link rel="stylesheet" href="mouseFollow.css">
+
+</head>
+<body>
+<section class="container" id="aa">
+    <ul class="imgBox clearfix">
+        <li><img src="images/follow/apple_1.jpg" data-big="images/follow/apple_1_bigger.jpg" alt=""></li>
+        <li><img src="images/follow/apple_2.jpg" data-big="images/follow/apple_2_bigger.jpg" alt=""></li>
+        <li><img src="images/follow/apple_3.jpg" data-big="images/follow/apple_3_bigger.jpg" alt=""></li>
+        <li><img src="images/follow/apple_4.jpg" data-big="images/follow/apple_4_bigger.jpg" alt=""></li>
+    </ul>
+    <!--<div class="mark">-->
+        <!--<img src="images/follow/apple_1_bigger.jpg" alt="">-->
+    <!--</div>-->
+</section>
+<!--<div>-->
+    <!--方案一：每一个li中都有一个大盒子，大盒子中存放的是大图，开始是隐藏的，鼠标进入到li中-->
+    <!--让其显示，并且让他的位置跟随鼠标的位置改变而改变即可，鼠标离开li，让自己的盒子消失即可-->
+    <!--（类似放大镜）-->
+    <!--方案二：只有一个大盒子（可以在JS中动态创建，也可以事先写好，控制显示隐藏），鼠标进入任意一个-->
+    <!--li,都让大盒子出来，并且大盒子中存放的图片根据当前进入的li的动态改变，-->
+<!--</div>-->
+<script src="../common/js/jquery-1.11.3.min.js"></script>
+<script src="鼠标跟随(jq).js"></script>
+<!--<script src="鼠标跟随(js).js"></script>-->
+</body>
+</html>
+

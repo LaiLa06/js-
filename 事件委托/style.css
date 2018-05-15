@@ -1,0 +1,23 @@
+html.body{
+    width:100%;height:100%;overflow:hidden;
+}
+.menuBox{
+    width:300px;height:100%;overflow-y:auto;
+    background:#eee;
+}
+
+.menuBox ul li{position:relative;}
+.menuBox ul.level1{
+    margin-left:15px
+}
+.menuBox ul li span{
+  line-height:35px;font-size:13px;
+}
+.menuBox ul li em{
+    position:absolute;top:7px;left:0;
+    width:16px;height:16px;
+    background:url(img/icon.png);
+}
+.menuBox ul li em.plus{
+    background-position:-59px -28px;
+}

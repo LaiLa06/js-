@@ -39,7 +39,7 @@
     width: 900px;
     height: 900px; /*MARK/SMALL-BOX===BIG-BOX:BIG-IMG*/
 }
-
-.magnifierBox .smallBox .mark, .magnifierBox .bigBox {
-    display: none;
-}
+/*.magnifierBox .smallBox .mark, .magnifierBox .bigBox{*/
+    /*!*display: none;*!*/
+    /*border-radius:50%;*/
+/*}*/

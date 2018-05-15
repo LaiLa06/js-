@@ -1,0 +1,16 @@
+.container{
+   margin:20px auto;width:462px;height:77px;
+    position: relative;
+}
+.imgBox li{
+    float: left;width:100px;height:75px;border:1px solid orangered;
+    margin-right:18px;
+}
+.imgBox li:last-child{margin-right:0}
+.imgBox li img{width:100%;height:100%}
+.mark{
+    position:absolute;
+    width:400px;height:300px;box-sizing:border-box;
+    border:1px solid lightgreen;
+}
+.mark img{width:100%;height:100%}
