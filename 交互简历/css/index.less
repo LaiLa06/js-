@@ -1,0 +1,64 @@
+
+@import "reset.min.less";
+//@import(reference) "common.less";  //reference只引入不编译
+
+html{
+  font-size:100px;   //640px的设计稿
+}
+html,body{width:100%;height:100%;overflow:hidden;background-color:#f4f4f4;}
+.mianBox{
+  max-width:640px;width:100%;height:100%;
+  margin:0 auto;background-color:#fff;
+}
+.loadingBox{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+.loadingBox{
+  background-color:#000;display:block;
+  > div{
+    position:absolute;top:45%;left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+  }
+  .title{
+    color:#fff;white-space:nowrap;
+    h1{
+      font-size:0.5rem;line-height:.75rem;letter-spacing:.1rem;font-weight:normal;
+    }
+    h2{
+      font-size:0.3rem;margin-top:0.2rem;font-weight:normal;
+    }
+  }
+  .progress{
+    position:relative;margin-top:1.5rem;
+    width:4.6rem;height: .3rem;background-color:#fff;border-radius:0.06rem;
+    .current{
+      position:absolute;
+      top:0;left:0;width:0;height:100%;border-radius:0.06rem;
+      background:-webkit-linear-gradient(left bottom, #a56edc 0%, #a56edc 25%,#ccb6e2 25%,#ccb6e2 50%,#a56edc 50%,#a56edc 75%,#ccb6e2 75%,#ccb6e2 100%,);
+      background:linear-gradient(left bottom, #a56edc 0%, #a56edc 25%,#ccb6e2 25%,#ccb6e2 50%,#a56edc 50%,#a56edc 75%,#ccb6e2 75%,#ccb6e2 100%,);
+      background-size:.3rem .3rem;
+      //虽然移动端（安卓 IOS）上的浏览器大部分都是webkit内核的，但是由于很多手机操作系统版本过低（尤其是安卓）
+      //导致很多css3新特性不能有效的，此时我们使用的大部分css3属性都要写两套才能兼容（加前缀的在前，不加在后）
+      //-webkit-animation:;
+      //animation:;
+      //目前有js插件可以自动的添加前缀（prefixfree.min.js）
+      animation: loadingMove .5s  0s infinite both;
+      // 设置过渡动画，当我们在js中改变宽度的时候，给其一个过渡的效果，使其流畅一点
+      transition: all .3s linear 0s;
+    }
+  }
+}
+
+@keyframes loadingMove {
+  0%{
+    background-position:0 0;
+  }
+  100%{
+    background-position:0 -.3rem;
+  }
+}

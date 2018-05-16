@@ -60,6 +60,12 @@ let up = function up(ev) {
 
 box.onmousedown = down;
 
+
+//==================================
+
+//=>浏览器有最小计算(反应)时间，同样的距离移动，操作快（用的时间短），浏览器能够反应过来的次数就少，触发MOUSE-MOVE这个行为次数也就变少了，如果移动的慢，反应次数多，触发行为的次数也就多了
+//=>水平方向的运动只跟即将松开手的一瞬间运动的速度有关系：我们需要获取的就是即将松开一瞬间的速度
+
 //1.移动中随时计算速度
 subscribeMove.add((curEle, ev) => {
     //=>第一次开始运动：让LAST-FLY(上一次的位置)以及SPEED-FLY(最新的速度)都为初始当前位置
@@ -122,6 +128,7 @@ subscribeUp.add((curEle, ev) => {
 subscribeDown.add((curEle, ev) => {
     clearInterval(curEle.flyTimer);
     curEle.speedFly = undefined;
+
     clearInterval(curEle.dropTimer);
 });
 

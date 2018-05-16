@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>珠峰培训-QQ音乐播放器</title>
+
+    <!--IMPORT CSS-->
+    <link rel="stylesheet" href="css/reset.min.css">
+    <link rel="stylesheet/less" href="css/index.less">
+
+    <!--REM-->
+    <script>
+        ~function () {
+            computedFont();
+            window.addEventListener('resize', computedFont, false);
+            function computedFont() {
+                var deviceW = document.documentElement.clientWidth;
+                if (deviceW > 640) {
+                    document.documentElement.style.fontSize = 100 + 'px';
+                    return;
+                }
+                document.documentElement.style.fontSize = deviceW / 640 * 100 + 'px';
+            }
+        }();
+    </script>
+    <script src="js/less-2.5.3.min.js"></script>
+    <!--加前缀-->
+    <script src="js/prefixfree.min.js"></script>
+</head>
+<body>
+<section class="mainBox">
+    <!--
+        AUDIO(音频标签)
+        h5中AUDIO支持的音频格式：
+        mp3（常用）：移动端大部分都兼容
+        OGG:不支持Safari浏览器
+        WAV：
+        1、controls:显示自带的播放器(不设置则默认不显示，一般不用默认)
+        2、loop:播放完成后循环播放
+        3、autoplay:页面进入的时候就开始自动播放
+        4、preload:设置音频的预加载方式
+            none:开始加载页面的时候,音频不加载,只有设置播放的时候在加载
+            metadata:开始只加载音频头部信息(时长\专辑...)
+            auto:开始加载页面的时候就加载全部的信息（默认）
+    -->
+    <!--格式验证-->
+    <!--<audio>-->
+        <!--<source src="xxx.mp3" type="audio/mpeg">-->
+        <!--<source src="xxx.ogg" type="audio/ogg">-->
+        <!--<source src="xxx.wav" type="audio/wav">-->
+        <!--&lt;!&ndash;当前浏览器版本过低，不支持audio播放&ndash;&gt;-->
+        <!--&lt;!&ndash;有的项目中，上面三种都不支持，会继续使用flash替代，但是需要装第三方播放插件&ndash;&gt;-->
+    <!--</audio>-->
+
+    <!--
+       还有 M3U8 :直播流   （兼容性挺好），一般视频加密都转化成这种流文件
+    -->
+    <audio src="img/myDream.m4a" preload="none" id="musicAudio"></audio>
+
+    <img class="backgroundImg" src="img/myDream.jpg"/>
+    <!--遮住模糊度产生的白边-->
+    <div class="backgroundMask"></div>
+
+    <!--HEADER-->
+    <header class="headerBox">
+        <img class="pic" src="img/myDream.jpg" alt="">
+        <div class="title">
+            <h1>我的梦-My Dream</h1>
+            <h2>张靓颖</h2>
+        </div>
+        <a href="javascript:;" class="playBtn move"></a>
+    </header>
+
+    <!--MAIN-->
+    <main class="contentBox">
+        <div class="wrapper">
+            <p class="active">大河向东流 天上的星星参北斗</p>
+            <p>大河向东流 天上的星星参北斗</p>
+        </div>
+    </main>
+
+    <!--FOOTER-->
+    <footer class="footerBox">
+        <div class="progressBox">
+            <span class="already">00:00</span>
+            <div class="progress">
+                <div class="current"></div>
+            </div>
+            <span class="duration">00:00</span>
+        </div>
+        <a href="javascript:;" class="downLoadBtn">下载这首音乐</a>
+    </footer>
+</section>
+
+<!--IMPORT JS-->
+<script src="js/zepto.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

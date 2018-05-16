@@ -1,0 +1,116 @@
+
+@green:#31C27C;
+
+html{
+  font-size:100px;
+  //1rem===100px
+}
+
+html,body,.mainBox{
+  position:relative;z-index:-3;
+  width:100%;height:100%;overflow:hidden;
+  background-color:#f4f4f4;
+}
+.mainBox{
+  max-width:640px;margin:0 auto;position:relative;
+  .backgroundImg,.backgroundMask{
+    position:absolute;top:0;left:0;width:100%;height:100%;box-sizing:border-box;
+    z-index:-2;
+    filter:blur(6px);
+  }
+  .backgroundMask{
+    z-index:-1;filter:none;
+    border:.1rem solid #000;
+    background-color:rgba(0,0,0,0.3);
+    //background:blur(0.3px);
+    box-shadow:inset 0 0 .5rem 0.1rem #000;
+  }
+  //头部
+  .headerBox{
+    position:relative;
+    padding:0.3rem;box-sizing:border-box;
+    width:100%;height:120px;overflow:hidden;
+    ackground-color:rgba(0,0,0,0.3);
+    .pic,.playBtn{
+      position:absolute;top:.3rem;
+    }
+    .pic{
+      left:.3rem;width:1.2rem;height:1.2rem;border-radius:50%;
+    }
+    .playBtn{
+      top:50%;margin-top:-.5rem;
+      right:.3rem;width:.6rem;height:.6rem;
+      background:url(../img/music.svg) center center no-repeat;
+      background-size:100% 100%;
+      &.move{
+        animation:musicMove .8s linear infinite both;
+      }
+    }
+    .title{
+      margin-left:1.4rem;
+      h1,h2{line-height: .6rem;color:#fff;font-weight:normal}
+      h1{font-size:.36rem}
+      h1{font-size:.32rem}
+    }
+  }
+  //内容
+  .contentBox{
+    position:relative;
+    //内容区域的高度是不固定的..wrapper的高度是内容撑开的，即使超出content的高度也没关系，超出隐藏
+    //后期控制wrapper在content中上下运动
+    margin:.4rem .2rem;overflow:hidden;
+    .wrapper{
+      position:absolute;
+      left:0;top:0;width:100%;
+      transition: .5s;
+      p{
+        line-height:.84rem;text-align:center;
+        color:rgba(255,255,255,.5);letter-spacing: .04rem;
+        text-overflow:ellipsis;white-space:nowrap;overflow:hidden;
+        &.active{color:@green;}
+      }
+    }
+  }
+  //footer
+  .footerBox{
+    margin:0 .2rem;text-align:center;padding-bottom:.2rem;
+    .progressBox{
+      display:flex;width:100%;justify-content:center;align-items:center;
+      .already,.duration{
+        display: block;color:#fff;font-size:.24rem;opacity:.5rem;margin:0 .1rem
+      }
+      .progress{
+        //margin-top:unit((.8-.04)/2,rem);
+        position:relative;
+        flex:1;height:.04rem;background-color:rgba(255,255,255,.2);
+        border-radius:0.04rem;
+        .current{
+          position:absolute;top:0;left:0;width:50%;height:100%;border-radius:0.04rem;
+          background-color:@green;
+          transition:.5s;
+        }
+      }
+    }
+    .downLoadBtn{
+      display:inline-block;
+      width:4.4rem;height:.9rem;line-height:.9rem;text-align:center;
+      color:#fff;font-size:.34rem;
+      background: url(../img/sprite_play.png) no-repeat .2rem -5.86rem @green;
+      background-size:.8rem 7rem;
+      border-radius:.45rem;  //椭圆的话，圆角大小是高度的一半
+      &:active{
+        background-color:darken(@green,20%);
+        //在原来的颜色基础上加深20%；lighten(@green,10%)减轻 10%
+      }
+    }
+  }
+}
+
+@keyframes musicMove {
+  from{
+    transform:rotate(0deg);
+  }
+  to{
+    transform:rotate(360deg);
+  }
+}
