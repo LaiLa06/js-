@@ -1,3 +1,27 @@
+/*
+       属性：
+        controls：设置这个属性，则使用浏览器默认的播放器控制（项目中很少使用默认播放器，一般都是自己做的）
+        autoplay：自动播放
+        loop：播放完之后是否允许循环播放
+        preload:资源预加载模式（none：开始的时候什么都不加载，播放的时候才加载[常用]	metadata：开始加载一些基础信息	auto：加载页面就开始加载资源）最好不要与play同时使用
+        duration：播放的总时间，单位s	currentTime:当前已经播放的时间，单位s
+        ended：是否已经播放结束：布尔类型
+        paused：当前是否为暂停状态
+        volume：控制音量【取值范围0-1,1最大，0静音】，默认1
+        事件：
+        canplay:可以正常播放事件【但是播放过程中可能出现卡顿】
+        canplaythrough：资源加载完毕，可以顺畅播放了
+        ended：已经播放完成
+        loadedmetadata：资源的基础信息已经加载完成
+        pause：触发了暂停
+        play：触发了播放
+        playing：正在播放中
+        方法：
+        pause()：暂停
+        play()：播放
+     */
+
+// loading
 let loadingRender = (function () {
     let $loadingBox = $(".loadingBox"),
         $current = $loadingBox.find(".current");
@@ -44,13 +68,206 @@ let loadingRender = (function () {
         // 停留1s移除
         let timer = setTimeout(()=>{
             $loadingBox.remove();
+            clearTimeout(timer);
+            phoneRender.init();
         },1000);
     };
     return {
         init: function () {
+          $loadingBox.css('display','block');
           run(done);
           maxdalay(done);
         }
     }
 })();
-loadingRender.init();
+// phone
+let phoneRender = (function(){
+ let $phoneBox = $(".phoneBox"),
+     $time = $phoneBox.find("span"),
+     $answer = $phoneBox.find(".answer"),
+     $answerMarkLink = $answer.find(".markLink"),
+     $hang = $phoneBox.find(".hang"),
+     $hangMarkLink = $hang.find(".markLink"),
+     answerBell = $("#answerBell")[0],
+     introduction = $("#introduction")[0];   //音视频一般都用原生操作
+
+ let answerMarkTouch = function () {
+     $answer.remove();
+     answerBell.pause();
+     $(answerBell).remove();
+     $hang.css({
+         'transform':'translateY(0rem)'
+     });
+     $time.css('display','block');
+     introduction.play();
+     computedTimer();
+ };
+// 计算播放时间
+    let autoTimer = null;
+    let computedTimer = function () {
+        // 我们让audio播放，首先去加载资源，部分资源加载完成后才会播放，才会计算出总时间
+        // duration等信息，所以我们可以把获取信息放到canplay事件中
+        let duration = 0;
+        introduction.oncanplay = function(){
+          duration = introduction.duration;
+        };
+        autoTimer = setInterval(() => {
+            let val = introduction.currentTime;
+            if(val>duration){
+                clearInterval(autoTimer);
+                closePhone();
+                return;
+            }
+            let min = Math.floor(val / 60),
+                second = Math.floor(val - min * 60);
+            min = min < 10 ? '0' + min : min;
+            second = second < 10 ? '0' + second : second;
+            $time.html(`${min}:${second}`);
+        }, 1000);
+    };
+ // 关闭phone
+ let closePhone = function () {
+     clearInterval(autoTimer);
+     introduction.pause();
+     $(introduction).remove();
+     $phoneBox.remove();
+     messageRender.init();
+ };
+ return{
+   init:function(){
+     $phoneBox.css('display','block');
+       // 播放bell
+     answerBell.play();
+     answerBell.volume = 0.3;
+     $answerMarkLink.tap(answerMarkTouch);
+     $hangMarkLink.tap(closePhone)
+   }
+ }
+})();
+// message
+let messageRender = (function(){
+ let $messageBox = $(".messageBox"),
+     $wrapper = $messageBox.find(".wrapper"),
+     $messageList = $wrapper.find("li"),
+     $keyboard = $(".keyboard"),
+     $textInp = $keyboard.find(".text"),
+     $submit = $keyboard.find(".submit"),
+     demonMusic = $("#demonMusic")[0];
+
+ let step = -1,   //当前展示信息的索引
+     total = $messageList.length + 1, // 信息总条数（自己还会发一条）
+     autoTimer = null,  // 记录定时器
+     interval = 1000;   // 信息出现的间隔时间
+
+ let tt = 0;
+
+ let showMessage = function () {
+     ++step;
+     if (step === 2) {
+         //已经展示两条：此时我们暂时结束自动发送信息，开始手动发送
+         clearInterval(autoTimer);
+         handleSend();
+         return;
+     }
+    let $cur = $messageList.eq(step);
+     $cur.addClass('active');
+     if(step>=3){
+         // 如果已经展示4条或者4条以上了,我们让wrapper向上移动(移动的距离是虚拟展示这一条的高度)
+         // 方案一：
+         // let curH = $cur[0].offsetHeight,
+         //     wraT = parseFloat($wrapper.css('top'));
+         // $wrapper.css('top',wraT - curH);
+         let  curH = $cur[0].offsetHeight;
+             // wraT = parseFloat($wrapper.css('transform'));   //js中基于css获取transform是个矩阵
+             tt -= curH;
+         console.log(tt);
+         $wrapper.css('transform', `translateY(${tt}px)`);
+     }
+     if(step >= (total-1)){
+         clearInterval(autoTimer);
+         closeMessage();
+     }
+ };
+// 手动发送信息
+ let handleSend = function () {
+     $keyboard.css('transform','translateY(0)').one('transitionend',()=>{
+         // $keyboard.css('transform','translateY(0)').on('transitionEnd',()=>{}
+         // transitionEnd  监听当前元素transition动画结束的事件
+         // 有几个样式属性改变，并且执行了过渡效果，事件就会被触发几次
+
+         // 用one做事件绑定，只会触发一次
+
+         let str = '好的，马上介绍!',
+             n = -1,
+             textTimer = null;
+         textTimer = setInterval(() => {
+             let originHtml = $textInp.html();
+             $textInp.html(originHtml + str[++n]);
+             if (n >= (str.length-1)) {
+                 clearInterval(textTimer);
+                 $submit.css('display','block');
+             }
+         }, 100);
+     });
+
+ };
+ // 点击submit
+ let handleSubmit = function () {
+     // 把新创建的li增加到页面的第二个li的后面
+     $(`<li class="self">
+                <i class="arrow"></i>
+                <img src="img/zf_messageStudent.png" alt="" class="pic">
+                ${$textInp.html()}
+            </li>`).insertAfter($messageList.eq(1)).addClass('active');
+     $messageList =  $wrapper.find("li");
+     //重要：把新的li放到页面中，我们此时应该重新获取li ，让 $messageList的索引保持不变
+     // 该消失的消失
+     $textInp.html('');
+     $submit.css('display','none');
+     $keyboard.css('transform','translateY(3.7rem)');
+     // 继续向下展示剩余的信息
+     autoTimer = setInterval(showMessage,interval);
+ };
+// 关掉message区域
+let closeMessage = function () {
+    let delayTimer = setTimeout(()=>{
+        demonMusic.pause();
+        clearInterval(delayTimer);
+        $(demonMusic).remove();
+        $messageBox.remove();
+    },interval)
+};
+ return{
+   init:function(){
+       $messageBox.css('display','block');
+       showMessage();  // 一进来就展示一张，后期间隔interval再发送呢一条信息
+       autoTimer = setInterval(showMessage,interval);
+       $submit.tap(handleSubmit);
+       demonMusic.play();
+       demonMusic.volume = .3;
+   }
+ }
+})();
+
+// 开发过程中，由于当前项目板块众多，我们最好每一个板块都是一个单例，我们最好规划一种机制，
+// 通过标识的判断可以让程序只执行对应板块内容，这样开始哪个版本就把标识改为啥
+// 最常用的标识是（hash路由）
+
+let url = window.location.href,  //获取当前页面的url地址
+// window.location.href = ''   //让其跳转到等号右边的地址
+   well = url.indexOf("#"),
+   hash = well === -1 ? null : url.substr(well+1) ;
+
+switch (hash){
+    case 'loading':
+        loadingRender.init();
+        break;
+    case 'phone':
+        phoneRender.init();
+        break;
+    case 'message':
+        messageRender.init();
+        break;
+    default:
+        loadingRender.init();
+}
