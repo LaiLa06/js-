@@ -154,6 +154,7 @@ let musicRender = (function () {
                             content
                         });
                     });
+                    console.log(lyricAry);
                     return lyricAry;
                 })
                 .then(bindHTML)

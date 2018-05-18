@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: -100px;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+
+</div>
+<script src="js/zepto.min.js"></script>
+<script>
+    let box = document.querySelector(".box");
+    box.ontouchstart = function (ev) {
+         console.dir(ev);
+        /*
+        TouchEvent:
+           changedTouches
+           touches:
+           手指操作的信息集合,集合中记录了每一根操作的手指的相关信息，包含触发点
+           的坐标位置，touches 记录的信息只有手指在屏幕上才有，也就是手指离开
+           屏幕的时候信息就消失了，
+           changedTouches本意上记录的是改变的值，即使手指离开，值还在；
+       */
+        let point = ev.changedTouches[0];
+        this.strX = point.clientX;
+        this.strY = point.clientY;
+        this.isMove = false // 默认手指是不移动的
+
+    };
+    box.ontouchmove = function (ev) {
+        let point = ev.changedTouches[0];
+        this.changeX = point.clientX - this.strX;
+        this.changeY = point.clientY - this.strY;
+
+        if (Math.abs(this.changeX) > 10 || Math.abs(this.changeY) > 10) {
+            // 10是操作误差
+            this.isMove = true;
+        }
+
+    };
+    box.ontouchend = function (ev) {
+        if (this.isMove) {
+            // 滑动
+            if(this.changeX>0){
+                console.log("右滑")
+            }else{
+                console.log("左滑")
+            }
+            return;
+        };
+        console.log("我是点击操作");
+    };
+</script>
+</body>
+</html>

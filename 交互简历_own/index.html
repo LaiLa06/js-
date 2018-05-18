@@ -2,69 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>交互简历</title>
-    <!--dev环境-->
     <link rel="stylesheet/less" href="css/index.less">
     <script src="js/less-2.5.3.min.js"></script>
-    <!--自动加前缀-->
-    <script src="js/prefixfree.min.js"></script>
     <script>
-        // 根据当前设备的宽度，动态计算出rem的换算比例，实现页面中元素的等比缩放
-        (function annoymous(window) {
-            let computedREM = function () {
-                let winW = document.documentElement.clientWidth,
-                    desW = 640;
-                if (winW > desW) {
-                    document.documentElement.style.fontSize = '100px';
-                    return;
-                }
-                document.documentElement.style.fontSize = winW / desW * 100 + 'px';
-            };
-            computedREM();
-            window.addEventListener('resize', computedREM);
-        })(window);
+        (()=>{
+           computedRem();
+           window.onresize = computedRem;
+           function computedRem (){
+              const screenW = 640,
+                    fontSet = 100;
+              let winW = document.documentElement.offsetWidth;
+              if(winW >= screenW){
+                  document.documentElement.style.fontSize = fontSet +'px'
+              }
+              document.documentElement.style.fontSize = winW/screenW*fontSet +'px';
+           }
+        })()
     </script>
-
 </head>
 <body>
-<main class="mianBox">
-    <!--外面加一层，主要是控制当前页面的最大宽度，防止做好的页面在PC端预览的时候满屏展示，字体和大小被拉伸  -->
-    <section class="loadingBox">
-        <div>
-            <!--load区域-->
+<div class="container">
+    <section class="area loadingBox">
+        <div class="info">
             <div class="title">
                 <h1>珠峰培训</h1>
-                <h2>H5交互场景简历</h2>
+                <h2>H5交互型简历</h2>
             </div>
-            <div class="progress">
-                <div class="current"></div>
+            <!--加载页面-->
+            <div class="progressBox">
+                <div class="progress">
+                    <div class="current"></div>
+                </div>
             </div>
         </div>
     </section>
-    <!--电话-->
-    <section class="phoneBox">
-        <h2><img src="img/zf_phoneLogo.png"/><span>00:00</span></h2>
-        <div class="answer">
-            <div class="markMove"></div>
-            <a href="javascript:;" class="markLink"></a>
+    <section class="area phoneBox">
+        <div class="title">
+            <img src="img/zf_phoneLogo.png" alt="">
+            <span>00:00</span>
         </div>
-        <div class="hang">
-            <a href="javascript:;" class="markLink"></a>
+        <div class="keyborad">
+           <div class="call">
+               <div class="info">
+                   <audio src="audio/bell.mp3" id="callMusic" preload="none" loop></audio>
+                   <a href="javascript:;" class="btn"></a>
+                   <div class="roll"></div>
+               </div>
+           </div>
+           <div class="answer">
+               <div class="info">
+                   <audio src="audio/say.mp3" id="answerMusic" preload="none" loop></audio>
+                   <a href="javascript:;" class="btn"></a>
+               </div>
+           </div>
         </div>
-        <!--铃声-->
-        <!--
-         preload 属性规定是否在页面加载后载入音频。
-           auto - 当页面加载后载入整个音频
-           meta - 当页面加载后只载入元数据
-           none - 当页面加载后不载入音频
-         -->
-        <audio src="audio/bell.mp3" loop preload="auto" id="answerBell"></audio>
-        <audio src="audio/say.mp3" loop preload="none" id="introduction"></audio>
     </section>
     <!--对话框-->
-    <section class="messageBox">
+    <section class="area messageBox">
         <ul class="wrapper clearfix">
             <li class="self">
                 <i class="arrow"></i>
@@ -128,16 +126,16 @@
                 <img src="img/zf_messageLogo.png" alt="" class="pic">
                 就是你啦，明天来上班</li>
         </ul>
-        <div class="keyboard">
-            <!--好的，马上介绍-->
-            <span class="text"></span>
+        <div class="keybord">
+            <!--好的，马上介绍!-->
+            <span></span>
             <a href="javascript:;" class="submit"></a>
         </div>
         <audio src="audio/music.mp3" loop preload="none" id="demonMusic"></audio>
     </section>
-</main>
+</div>
 <script src="js/zepto.min.js"></script>
+<script src="js/prefixfree.min.js"></script>
 <script src="js/index.js"></script>
-
 </body>
 </html>
