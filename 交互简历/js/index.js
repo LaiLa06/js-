@@ -38,7 +38,7 @@ let loadingRender = (function () {
                 callback && callback()
             } else {
                 alert("非常遗憾,您当前的网络不佳，请稍后重试！");
-                window.location.href = 'http://www.qq.com';  //此时我们不应该继续加载页面，而是让其关掉页面或者是跳转到其他页面
+                window.reload();  //此时我们不应该继续加载页面，而是让其关掉页面或者是跳转到其他页面
             }
         }, 10000);
     };
@@ -60,6 +60,7 @@ let loadingRender = (function () {
                     clearTimeout(delayTimer);
                 }
             };
+            //src 属性一定要写到 onload 的后面，否则程序在 IE 中会出错。
             tempImg.src = item;
         });
     };
@@ -232,14 +233,17 @@ let messageRender = (function () {
     let closeMessage = function () {
         let delayTimer = setTimeout(() => {
             demonMusic.pause();
-            clearInterval(delayTimer);
             $(demonMusic).remove();
+            $keyboard.remove();
             $messageBox.remove();
+            cubeRender.init();  // 执行下一模块
+            clearInterval(delayTimer);
         }, interval)
     };
     return {
         init: function () {
             $messageBox.css('display', 'block');
+            $keyboard.css('display', 'block');
             showMessage();  // 一进来就展示一张，后期间隔interval再发送呢一条信息
             autoTimer = setInterval(showMessage, interval);
             $submit.tap(handleSubmit);
@@ -248,7 +252,101 @@ let messageRender = (function () {
         }
     }
 })();
+// cube
+let cubeRender = (function () {
+    let $cubeBox = $(".cubeBox"),
+        $cube = $cubeBox.find(".cube"),
+        $cubeList = $cube.find("li");
 
+    let start = function (ev) {
+        // 记录手指按在位置的起始坐标
+        let point = ev.changedTouches[0];
+        this.strX = point.clientX;
+        this.strY = point.clientY;
+        this.changeX = 0;
+        this.changeY = 0;
+    };
+    let move = function (ev) {
+        // 用最新手指的位置-起始的位置，记录xy轴的偏移
+        let point = ev.changedTouches[0];
+
+        this.changeX = point.clientX - this.strX;
+        this.changeY = point.clientY - this.strY;
+    };
+    let end = function (ev) {
+        // 获取change值 、rotate值
+        let {changeX, changeY, rotateX, rotateY} = this,
+            isMove = false;
+
+        // 验证移动距离  小于10默认没有滑动
+        Math.abs(changeX) > 10 || Math.abs(changeY) > 10 ? isMove = true : null;
+        // 只有发生移动才做处理
+        if(isMove){
+           // 左右滑动，changeX = rotateY （正比）
+           // 上下滑动，changeY = rotateY（反比）
+
+           //  移动距离的1/3作为旋转角度
+            rotateX = rotateX - changeY / 3;
+            rotateY = rotateY + changeX / 3;
+            // 赋值给魔方盒子
+            $(this).css('transform', `scale(.6) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`);
+            this.rotateX = rotateX;
+            this.rotateY = rotateY;
+        }
+        // 清空其他记录的自定义属性值,做不做都行来着
+        ['strX','strY','changeX','changeY'].forEach(item=>{
+            this[item] = null;
+        })
+    };
+
+    return {
+        init: function () {
+            $(".messageBox").remove();
+            $cubeBox.css('display', 'block');
+            // 手指操作cube，让cube跟着旋转
+            let cube = $cube[0];
+            cube.rotateX = -35; // 记录初始的旋转角度
+            cube.rotateY = -35;
+
+            $cube.on('touchstart', start);
+            $cube.on('touchmove', move);
+            $cube.on('touchend', end);
+        }
+    }
+})();
+// detail
+let detailRender = (function(){
+ let $detailBox = $(".detailBox"),
+     swiper = null;
+ let swiperInit = function () {
+     swiper= new Swiper('.swiper-container',{
+       // initialSlide :2, // 初始slide索引
+       // direction:'horizontal/vertical'  // 控制滑动方向
+       //   loop:true   // 有一个bug，3D切换设置loop为true的时候偶尔会实现无法切换的情况（2D没问题）
+         // swiper的无缝轮播原理：把真实图片的第一张克隆一份放到末尾，把真实最后一张克隆一份放到开始
+         // （真实slide有5个，wrapper中有7个slide）
+         effect:'coverflow',
+         onInit:(sw)=>{},
+         onTransitionEnd:(sw)=>{
+             //sw 当前实例
+         }
+         // 实例的私有属性：
+         // 1、activeIndex：当前展示slide块的索引
+         // 2、slides：获取所有的slides数组
+         // ...
+         // 实例的公有方法
+         // 1、slideTo   // 切换到指定索引
+         // ...
+     })
+ };
+
+ return{
+   init:function(){
+       $detailBox.css("display","block");
+       swiperInit();
+   }
+ }
+})();
 // 开发过程中，由于当前项目板块众多，我们最好每一个板块都是一个单例，我们最好规划一种机制，
 // 通过标识的判断可以让程序只执行对应板块内容，这样开始哪个版本就把标识改为啥
 // 最常用的标识是（hash路由）
@@ -267,6 +365,12 @@ switch (hash) {
         break;
     case 'message':
         messageRender.init();
+        break;
+    case 'cube':
+        cubeRender.init();
+        break;
+    case 'detail':
+        detailRender.init();
         break;
     default:
         loadingRender.init();

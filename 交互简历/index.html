@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>交互简历</title>
     <!--dev环境-->
+    <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
     <link rel="stylesheet/less" href="css/index.less">
+
     <script src="js/less-2.5.3.min.js"></script>
     <!--自动加前缀-->
     <script src="js/prefixfree.min.js"></script>
@@ -26,6 +28,8 @@
             window.addEventListener('resize', computedREM);
         })(window);
     </script>
+
+
 
 </head>
 <body>
@@ -135,8 +139,35 @@
         </div>
         <audio src="audio/music.mp3" loop preload="none" id="demonMusic"></audio>
     </section>
+    <!--cube-->
+    <section class="cubeBox">
+        <!--ul.cube>li*6>img[src="img/zf_cube$/png"]-->
+        <ul class="cube">
+            <li><img src="img/zf_cube1.png" alt=""></li>
+            <li><img src="img/zf_cube2.png" alt=""></li>
+            <li><img src="img/zf_cube3.png" alt=""></li>
+            <li><img src="img/zf_cube4.png" alt=""></li>
+            <li><img src="img/zf_cube5.png" alt=""></li>
+            <li><img src="img/zf_cube6.png" alt=""></li>
+        </ul>
+        <img src="img/zf_cubeTip.png" class="tip" alt="">
+    </section>
+    <!--detail-->
+    <section class="detailBox">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 2</div>
+                <div class="swiper-slide">Slide 3</div>
+                <div class="swiper-slide">Slide 3</div>
+            </div>
+        </div>
+    </section>
 </main>
 <script src="js/zepto.min.js"></script>
+<script src="js/swiper.min.js"></script>
 <script src="js/index.js"></script>
 
 </body>

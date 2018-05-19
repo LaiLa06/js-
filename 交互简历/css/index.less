@@ -10,7 +10,7 @@ html,body{width:100%;height:100%;overflow:hidden;background-color:#f4f4f4;}
   max-width:640px;width:100%;height:100%;
   margin:0 auto;background-color:#fff;
 }
-.loadingBox,.phoneBox,.messageBox{
+.loadingBox,.phoneBox,.messageBox,.cubeBox,.detailBox{
   display:none;
   position:relative;
   width:100%;
@@ -100,7 +100,6 @@ html,body{width:100%;height:100%;overflow:hidden;background-color:#f4f4f4;}
 }
 //对话框
 .messageBox{
- display:block;
  background-color:#EAEAEA;
  .wrapper{
   position:absolute;top:.2rem;left:0;width:100%;transition:.3s;
@@ -146,6 +145,7 @@ html,body{width:100%;height:100%;overflow:hidden;background-color:#f4f4f4;}
    }
  }
  .keyboard{
+   display:none;
    position:absolute;left:0;bottom:-.5rem;box-sizing:border-box;
    width:100%;height:5.16rem;
    background:url(../img/zf_messageKeyboard.png) no-repeat;
@@ -165,6 +165,81 @@ html,body{width:100%;height:100%;overflow:hidden;background-color:#f4f4f4;}
      background-size:100% 100%;
    }
  }
+}
+//cubeBox
+.cubeBox{
+ background:url(../img/zf_cubeBg.jpg) no-repeat;
+ background-size:cover;
+ .cube{
+   position:absolute;top:50%;left:50%;margin-left:-2.55rem;margin-top:-2.55rem;
+   width:5.1rem;height:5.1rem;
+   li{
+     position: absolute;top:0;left:0;width:100%;height:100%;
+   }
+   img{width:100%;height:100%}
+ }
+  .tip{
+    position:absolute;left:50%;margin-left:-1.97rem;bottom:.5rem;
+    width:3.94rem;height:.44rem
+  }
+}
+// 在二维平面中实现3D效果
+.cubeBox{
+  //给要实现3D效果的元素所在的舞台设置perspective视距（1000-2000），就是我距离它多远看的
+  perspective:2000px;   // 默认情况下，人和屏幕的距离是0，离太近看不全
+  .cube{
+    //给需要操作的元素设置3D变形效果
+    transform-style:preserve-3d;
+    // transform-origin:center center 0 ;  // 从哪个点开始变形,默认是中心点
+    // 给魔方一个初始旋转角度
+    transform:scale(.6) rotateX(-35deg) rotateY(30deg);
+    transition:.3s;  // 加过渡动画
+    li{
+      &:nth-child(1){
+        transform:translateZ(2.55rem);
+      }
+      &:nth-child(2){
+        transform:translateZ(-2.55rem) rotate(180deg);
+      }
+      &:nth-child(3){
+        transform:translateX(2.55rem) rotateY(-90deg);
+      }
+      &:nth-child(4){
+        transform:translateX(-2.55rem) rotateY(-90deg);
+      }
+      &:nth-child(5){
+        transform:translateY(-2.55rem) rotateX(90deg);
+      }
+      &:nth-child(6){
+        transform:translateY(2.55rem) rotateX(-90deg);
+      }
+    }
+  }
+
+}
+.detailBox{
+  .swiper-container{
+    width:100%;height:100%;overflow:hidden;
+    .swiper-slide{
+      position:relative;
+      width:100%;height:100%;overflow:hidden;
+      &:nth-child(2){
+        background-color:#FFF9ce;
+      }
+      &:nth-child(3){
+        background-color:#E45454;
+      }
+      &:nth-child(4){
+        background-color:#FAc471;
+      }
+      &:nth-child(5){
+        background-color:#FBFFE8;
+      }
+      &:nth-child(6){
+        background-color:#5975FF;
+      }
+    }
+  }
 }
 @keyframes loadingMove {
   0%{
