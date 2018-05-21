@@ -1,0 +1,123 @@
+@import "reset";
+@import "swiper";
+@import "font";   // 字体文件
+@import "common";
+
+html{
+  font-size:100px;  //640px中 1rem=100px
+  min-height:100%;
+}
+html,body{
+  overflow-x:hidden;
+}
+.mainBox{
+  max-width:640px;margin:0 auto;background-color:#F4F4F4;
+}
+.headerBox{
+ padding:0 .2rem;
+ height:1rem;line-height:1rem;
+ background:@blue;overflow: hidden;
+  h1{
+    float:left;font-size:0;
+    a{font-size:.8rem;color:@white;}
+  }
+  >a{
+    float: right;margin-left:.32rem;
+    &.weather{
+      display:inline-block;
+      width:.44rem;height:.44rem;
+      background:url(../images/cloud.gif) no-repeat center center;
+      background-size:.44rem .44rem;    margin-top: 0.3rem;
+    }
+    &.person,&.navMenu{
+      font-size:.44rem;color:@white;
+    }
+  }
+}
+.navBox{
+  display:none;padding:.16rem 0;
+  a{
+    display:block;float:left;width:unit(100/6,%);text-align:center;
+    height:.64rem;line-height: .64rem;font-size:.32rem;color:@gray;
+  }
+}
+.bannerBox{
+  position:relative;
+  display:none; // 数据显示完了再展示
+  height:3.4rem;overflow:hidden;
+  .swiper-slide{
+    position:relative;
+    height:100%;
+    img{width:100%;height:100%}
+    p{
+      .text-clip;
+      position:absolute;
+      bottom:0;left:0;
+      width:100%;height:.6rem;line-height:.6rem;
+      padding:0 .2rem;box-sizing:border-box;
+      font-size:.28rem;color:@white;
+      background:rgba(0,0,0,0.6);
+    }
+  }
+  .swiper-pagination{
+    left:auto;right:0;bottom:0;width:1rem;height:.6rem;line-height:.6rem;
+    color:#ccc;text-align:center;font-size:.28rem;
+    .swiper-pagination-current{color:@white}
+  }
+}
+.messageBox{
+  margin:.16rem 0;height:.8rem;
+  background-color:@white;
+  padding-left:1rem;position:relative;
+  .LiveFlag{
+    position:absolute;left:0;top:0;width:1rem;height:.8rem;
+    box-sizing: border-box;text-align:center;
+    &:after{
+      position:absolute;
+      display:block;content:"直播";
+      top:50%;left:50%;margin-top:-.2rem;margin-left:-.37rem;
+      width:.74rem;height:.4rem;
+      background-color:red;color:@white;
+    }
+  }
+  .swiper-container{
+    height:.8rem;overflow:hidden;
+    .swiper-slide{
+      height:.8rem;line-height:.8rem;
+      a{
+        .text-clip;display:block;
+        font-size:.28rem;color:#555;
+      }
+    }
+  }
+}
+.newsBox{
+  .container{
+    .newsItem{
+      position: relative;min-height:2.3rem;
+      padding:.1rem;background-color:#fff;
+      margin-top:.15rem;
+      &:first-child{margin-top:0}
+     >img{position:absolute;left:.1rem;top:.1rem;width:3rem;}
+     h3{
+       padding:.1rem .1rem .1rem 3.2rem;.text-clip;line-height:120%;font-weight:normal;
+     }
+      >div{
+        width:100%;padding-bottom:.2rem;box-sizing:border-box;
+        img{
+          width:32%;float:left;
+          height:1.4rem;
+          margin-left:1.25%;
+          &:nth-of-type(1){margin-left:0}
+        }
+      }
+      span{
+        position:absolute;bottom:.15rem;right:.1rem;color:#555;font-size:.2rem;
+      }
+      &.imgBox{
+        padding-right:0;
+        h3{padding-left:.1rem}
+      }
+    }
+  }
+}

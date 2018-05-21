@@ -317,7 +317,8 @@ let cubeRender = (function () {
 // detail
 let detailRender = (function(){
  let $detailBox = $(".detailBox"),
-     swiper = null;
+     swiper = null,
+     $dl = $(".page1>dl");
  let swiperInit = function () {
      swiper= new Swiper('.swiper-container',{
        // initialSlide :2, // 初始slide索引
@@ -326,24 +327,68 @@ let detailRender = (function(){
          // swiper的无缝轮播原理：把真实图片的第一张克隆一份放到末尾，把真实最后一张克隆一份放到开始
          // （真实slide有5个，wrapper中有7个slide）
          effect:'coverflow',
-         onInit:(sw)=>{},
-         onTransitionEnd:(sw)=>{
-             //sw 当前实例
-         }
-         // 实例的私有属性：
-         // 1、activeIndex：当前展示slide块的索引
-         // 2、slides：获取所有的slides数组
-         // ...
-         // 实例的公有方法
-         // 1、slideTo   // 切换到指定索引
-         // ...
+         onInit: move,
+         onTransitionEnd:move
      })
  };
-
+ let move = function (swiper) {
+        // swiper.当前创建的实例
+        console.log(swiper);
+        let activeIn = swiper.activeIndex,
+            slideAry = swiper.slides;
+        if(activeIn===0){
+            // 实现折叠效果
+            $dl.makisu({
+                selector:'dd',
+                overlop:.6,
+                speeed:.8
+            });
+            $dl.makisu('open');
+        }else{
+            $dl.makisu({
+                selector:'dd',
+                speeed:0   //快速关闭
+            });
+            $dl.makisu('close');
+        }
+    };
  return{
    init:function(){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        $detailBox.css("display","block");
-       swiperInit();
+       swiperInit(); //初始化swiper
    }
  }
 })();
