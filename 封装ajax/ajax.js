@@ -2,9 +2,26 @@
     function AJAX(options) {
         return new init(options);
     }
-
+    let _emptyIn = new Function(''),
+        _defalut={
+        url:'',
+        method:'get',
+        data:'',
+        dataType:'json',
+        async:'true',
+        cache:'true',
+        success:_emptyIn,
+        error:_emptyIn
+    };
+    // Object.assign();
     let init = function init(options = {}) {
         //=>INIT PARAM
+        // options = {..._defalut,...options};
+        // Object.assign(_defalut,options);
+        // for(let attr in options){
+        //     if(!options.hasOwnProperty(attr)) break;
+        //     this[attr] = options[attr];
+        // }
         let {
             url,
             method = 'GET',
@@ -24,6 +41,13 @@
         //=>SEND:发送AJAX请求
         this.sendAjax();
     };
+    // 要处理的事情
+    // 发送ajax请求
+    // async (默认异步)
+    // dataType（xml，text，json，默认json），
+    // cache（get系的是否要缓存，默认要），
+    // data（get是问号传参，post是请求主体传参），
+    // 检查url中是否存在问号（要拼接参数还有加随机数）
 
     AJAX.prototype = {
         constructor: AJAX,
@@ -85,7 +109,7 @@
                 let str = ``;
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
-                        str += `${key}=${data[key]}&`;
+                        str += `${key}=${data[key]}&`;    // 转换为 xx=xxx&xxx=xxxx 的X-WWW-FORM-URLENCODED格式(客户端一般都是这种格式，除此还有RAW格式)；
                     }
                 }
                 data = str.substring(0, str.length - 1);
