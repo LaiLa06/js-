@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../common/css/bootstrap3.3.7.css">
+    <style>
+        .sel {
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+            background-color: #efc773
+        }
+
+        a {
+            color: #efc773
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-10 col-sm-offset-1 col-md-offset-2">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h2>主人,你有{{num}}件未完成的事情</h2>
+                        <input type="text" class="form-control" v-model="title" @keyup.13="addToDo">
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" v-for="item in filterList" @dblclick="cur=item">
+                                <input type="text" v-focus="cur==item" v-show="cur==item" v-model="item.title"
+                                       @keyup.13="cur=''" @blur="cur=''">
+                                <span v-show="cur!==item">
+                                    <input type="checkbox" v-model="item.isSelected">
+                                    <span style="vertical-align:top"
+                                          :class="{sel:item.isSelected}">{{item.title}}</span>
+                                    <button class="btn btn-xs btn-danger pull-right"
+                                            @click="remove(item)">&bigotimes;</button>
+                                    </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <ul class="nav nav-pills">
+                            <li role="presentation" :class="{active:hash==='all'}"><a href="#/all">全部完成</a></li>
+                            <li role="presentation" :class="{active:hash==='finished'}"><a href="#/finished">已完成</a>
+                            </li>
+                            <li role="presentation" :class="{active:hash==='unfinish'}"><a href="#/unfinish">未完成</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../common/js/axios.js"></script>
+<script src="../common/js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            todoList: [{title: "约会", isSelected: true}, {title: "看电影", isSelected: false}],
+            // filterList:[],
+            title: '',
+            hash: '',
+            cur: "" // 双击li的那个item
+        },
+        computed: {
+            num() {
+                return this.todoList.filter(item => !item.isSelected).length;
+            },
+            filterList() {
+                // 记录在本地存储中  localStorage 本地存储(只要不是清除浏览器缓存就会永久保存)，sessionStorage
+                // 缓存读存的都是字符串
+                localStorage.setItem('todo',JSON.stringify(this.todoList));
+                // localStorage.getItem('todo',JSON.parse(this.todoList));
+                // 依赖哈希
+               if(this.hash==='all') return this.todoList;
+               if(this.hash==='finished') return this.todoList.filter(item=>item.isSelected);
+               if(this.hash==='unfinish') return this.todoList.filter(item=>!item.isSelected);
+            }
+        },
+        methods: {
+            addToDo() {
+                this.todoList.unshift({isSelected: false, title: this.title});
+                this.title = '';
+            },
+            remove(item) {
+                this.todoList = this.todoList.filter(val => val != item);
+            },
+        },
+        created() {
+            // 从缓存中给todoList赋值
+            if(localStorage.getItem('todo')){
+               this.todoList = JSON.parse(localStorage.getItem('todo'))
+            }
+            // 可以使用this下面的数值了
+            this.hash= location.hash.substring(2)||'all';
+            window.addEventListener('hashchange', () => {
+                // this.hash = location.hash.split("/")[1];
+                this.hash = location.hash.substring(2);
+                console.log(this.hash);
+            })
+        },
+        directives: {
+            focus(el, bindings) {
+                if (bindings.value) {
+                    console.dir(el);
+                    el.focus();
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
