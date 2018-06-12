@@ -17,7 +17,13 @@ let dirname = path.resolve();
                 }
                 resolve(result || '');
             }];
-            item === 'readFile' ? arg.unshift('utf8') : null;
+            if(item==='readFile'){
+                // 非图片资源或者音视频等富媒体资源设置utf-8
+                if(!/(jpg|jpeg|png|git|svg|ico|BMP|eot|ttf|woff|mp3|mp4|ogg|wav|w4a|wmv|avi)$/i.test(pathname)){
+                    arg.unshift('utf8')
+                }
+                
+            }
             item === 'copyFile' ? arg.unshift(copypath) : null;
             fs[item](pathname, ...arg);
         });
@@ -43,8 +49,3 @@ let dirname = path.resolve();
         });
     };
 });
-
-
-unlink("temp2.js").then(result=>{
-    
-})

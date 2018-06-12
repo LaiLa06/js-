@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    <script src="js/axios.min.js"></script>
+    <script src="js/md5.min.js"></script>
+    <script>
+      axios.defaults.baseURL = "http://localhost:1717";
+      // axios默认是基于请求主体传递给RAW的格式：'{name：“xxx”,ages:12}'
+      axios.defaults.transformRequest= data=>{
+        // 基于这个请求拦截器可以把post和put等传递给服务器的请求主体内容进行格式化处理，data就是配置的请求主体对象
+        let str =``;
+        if(data && typeof data=== 'Object'){
+            for(let key in data){
+                if(data.hasOwnProperty(key)){
+                    str += `${key}=${data[key]}`
+                }
+            }
+            console.log(data);
+            data = str.substring(0,str.length-1);
+        }
+        return data;
+      };
+      
+      axios.post("/register",{
+         name:"测试",
+         password:hex_md5('000000'),
+         phone:"",
+         sex:0,
+         bio:"" 
+      }).then(res=>{
+          console.log(res);
+      });
+    </script>
+</body>
+</html>
