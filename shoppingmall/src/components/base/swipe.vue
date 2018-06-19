@@ -1,6 +1,6 @@
 <template>
   <van-swipe :autoplay="3000">
-    <van-swipe-item v-for="(item, index) in result" :key="index">
+    <van-swipe-item v-for="(item, index) in slides" :key="index">
       <img v-lazy="item.image" width="100%"/>
     </van-swipe-item>
   </van-swipe>
@@ -11,7 +11,7 @@
 
   export default {
     name: "swipe",
-    props:["result"],
+    props:["slides"],
     components: {
 
       [Swipe.name]: Swipe,   // 等价 "van-swipe":Swipe  这点很重要，宝宝之前不会

@@ -26,5 +26,5 @@
 </script>
 
 <style scoped>
-
+  .van-tabbar--fixed{z-index:66}
 </style>

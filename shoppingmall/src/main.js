@@ -9,11 +9,16 @@ import router from './router'
 // import 'vant/lib/vant-css/index.css';
 
 // 使用babel-plugin-import按需导入
-import { Tabbar, TabbarItem,Icon,Lazyload,Search,Row, Col,Button,Cell, CellGroup} from 'vant';
+import { Tabbar, TabbarItem,Icon,Lazyload,Search,Row, Col,Button,Cell, CellGroup,Card,Checkbox, CheckboxGroup,Stepper,SubmitBar,Dialog } from 'vant';
 // 需要哪个模块就use哪个模块  每次use只能放一个
-Vue.use(Icon).use(Tabbar).use(TabbarItem).use(Lazyload).use(Search).use(Row).use(Col).use(Button).use(Cell).use(CellGroup);
+Vue.use(Icon).use(Tabbar).use(TabbarItem).use(Lazyload).use(Search).use(Row).use(Col).use(Button)
+  .use(Cell).use(CellGroup).use(Card).use(Checkbox).use(CheckboxGroup).use(Stepper).use(SubmitBar).use(Dialog);
 
 Vue.config.productionTip = false;
+// 定义全局过滤器
+Vue.filter("toFixed",(target,val=2)=>{
+  return parseFloat(target).toFixed(val);
+});
 
 /* eslint-disable no-new */
 new Vue({
