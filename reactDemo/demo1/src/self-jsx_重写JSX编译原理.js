@@ -3,6 +3,7 @@
  *   参数：至少两个 TYPE/PROPS，CHILDREN这个部分可能没有可能有多个
  */
 function createElement(type, props, ...childrens) {
+    props = props || {};  // 下面要用in方法，当props不传的时候存在null的情况，所有要赋初始值
     let ref, key;
     if ('ref' in props) {
         ref = props['ref'];
@@ -23,7 +24,6 @@ function createElement(type, props, ...childrens) {
     };
 }
 
-
 function render(objJSX, container, callBack) {
     let {type, props} = objJSX,
         {children} = props;
@@ -33,6 +33,12 @@ function render(objJSX, container, callBack) {
         let value = props[attr];
         if (value == undefined) continue;//=>NULL OR UNDEFINED
 
+        // 当是事件属性的时候
+        let regEvent = /^on/;
+        if(regEvent.test(attr)){
+            newElement.addEventListener(attr.toUpperCase().substr(2),value.bind(undefined));
+            continue;
+        }
         switch (attr.toUpperCase()) {
             case 'CLASSNAME':
                 newElement.setAttribute('class', value);

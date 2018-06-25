@@ -9,11 +9,13 @@ let p1 = new Promise((resolve,reject)=>{
 
 
 let p2 = p1.then(res=>{
-    return new P
+    return new Promise((resolve,reject)=>{
+
+    })
     // throw new Error("error")
 },reason =>{
     console.log(2);
-}).then((),());
+}).then();
 
 p2.then(reasult=>{
     return aaa

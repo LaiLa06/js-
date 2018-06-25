@@ -47,6 +47,8 @@ class Promise {
                     x instanceof Promise ? x.then(resolve, reject) : resolve(x);
                 } catch (err) {
                     reject(err);
+
+
                 }
             });
             this.rejectedAry.push(() => {
